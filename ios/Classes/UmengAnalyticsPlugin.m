@@ -56,11 +56,13 @@
 - (void)event:(FlutterMethodCall*)call result:(FlutterResult)result {
     NSString* eventId = call.arguments[@"eventId"];
     NSString* label = call.arguments[@"label"];
-    
-    if (label == nil) {
-        [MobClick event:eventId];
-    } else {
+    NSDictionary *attributes = call.arguments[@"attributes"];
+    if (label != nil) {
         [MobClick event:eventId label:label];
+    } else if (attributes != nil){
+        [MobClick event:eventId attributes:attributes];
+    } else{
+        [MobClick event:eventId];
     }
     
     result([NSNumber numberWithBool:YES]);

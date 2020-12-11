@@ -5,6 +5,8 @@ import android.content.Context;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 
+import java.util.Map;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 
@@ -94,8 +96,15 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
     private void event(MethodCall call, MethodChannel.Result result) {
         final String eventId = call.argument("eventId");
         final String label = call.argument("label");
+        final Map<String, String> attributes = call.argument("attributes");
+        if (label != null){
+            MobclickAgent.onEvent(context, eventId, label);
+        }else if (attributes != null){
+            MobclickAgent.onEvent(context, eventId, attributes);
+        }else{
+            MobclickAgent.onEvent(context, eventId);
+        }
 
-        MobclickAgent.onEvent(context, eventId, label);
 
         result.success(true);
     }
