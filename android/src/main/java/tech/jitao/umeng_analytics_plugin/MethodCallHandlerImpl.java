@@ -1,6 +1,9 @@
 package tech.jitao.umeng_analytics_plugin;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.text.TextUtils;
 
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
@@ -53,7 +56,10 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         UMConfigure.setEncryptEnabled(encryptEnabled);
 
         final String androidKey = call.argument("androidKey");
-        final String channel = call.argument("channel");
+        String channel = call.argument("channel");
+        if(channel == null) {
+            channel = getChannelName(context);
+        }
         UMConfigure.init(context, androidKey, channel, UMConfigure.DEVICE_TYPE_PHONE, null);
 
         Integer sessionContinueMillis = call.argument("sessionContinueMillis");
@@ -107,5 +113,31 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
 
         result.success(true);
+    }
+
+    // 获取渠道工具函数
+    public static String getChannelName(Context ctx) {
+        if (ctx == null) {
+            return null;
+        }
+        String channelName = null;
+        try {
+            PackageManager packageManager = ctx.getPackageManager();
+            if (packageManager != null) {
+                //注意此处为ApplicationInfo 而不是 ActivityInfo,因为友盟设置的meta-data是在application标签中，而不是activity标签中，所以用ApplicationInfo
+                ApplicationInfo applicationInfo = packageManager.getApplicationInfo(ctx.getPackageName(), PackageManager.GET_META_DATA);
+                if (applicationInfo != null) {
+                    if (applicationInfo.metaData != null) {
+                        channelName = applicationInfo.metaData.get("UMENG_CHANNEL")+"";
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (TextUtils.isEmpty(channelName)){
+            channelName="Unknown";
+        }
+        return channelName;
     }
 }
