@@ -135,7 +135,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        if (TextUtils.isEmpty(channelName)){
+        if (TextUtils.isEmpty(channelName) || "null".equalsIgnoreCase(channelName)){
             channelName="Unknown";
         }
         return channelName;
