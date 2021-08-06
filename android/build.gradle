@@ -36,6 +36,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.umeng.umsdk:common:9.3.8'// 必选
-    implementation 'com.umeng.umsdk:asms:1.2.2'// 必选
+    implementation 'com.umeng.umsdk:common:9.4.0'// 必选
+    implementation 'com.umeng.umsdk:asms:1.2.3'// 必选
 }
