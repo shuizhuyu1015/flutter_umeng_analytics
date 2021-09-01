@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -76,5 +77,11 @@ class UmengAnalyticsPlugin {
     
 
     return _channel.invokeMethod<bool>('event', map);
+  }
+
+  /// 获取渠道名，iOS默认直接返回'App Store'
+  static Future<String> getChannel() {
+    if(Platform.isIOS) return Future.value('App Store');
+    return _channel.invokeMethod<String>('getChannel');
   }
 }

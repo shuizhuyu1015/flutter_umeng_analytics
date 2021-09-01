@@ -37,6 +37,8 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
             case "event":
                 event(call, result);
                 break;
+            case "getChannel":
+                _getChannel(call, result);
             default:
                 result.notImplemented();
         }
@@ -113,6 +115,11 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
 
 
         result.success(true);
+    }
+
+    private void _getChannel(MethodCall call, MethodChannel.Result result) {
+        String channelName = getChannelName(context);
+        result.success(channelName);
     }
 
     // 获取渠道工具函数
