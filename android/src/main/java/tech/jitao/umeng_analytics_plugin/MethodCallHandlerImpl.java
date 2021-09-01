@@ -39,6 +39,7 @@ public class MethodCallHandlerImpl implements MethodChannel.MethodCallHandler {
                 break;
             case "getChannel":
                 _getChannel(call, result);
+                break;
             default:
                 result.notImplemented();
         }
