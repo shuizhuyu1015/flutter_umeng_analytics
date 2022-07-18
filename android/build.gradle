@@ -36,6 +36,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.umeng.umsdk:analytics:8.1.6'
-    implementation 'com.umeng.umsdk:common:2.2.5'
+    implementation 'com.umeng.umsdk:common:9.4.7'
+    implementation 'com.umeng.umsdk:asms:1.4.1'
 }
