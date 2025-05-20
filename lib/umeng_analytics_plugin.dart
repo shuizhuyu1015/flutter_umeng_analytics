@@ -19,10 +19,10 @@ class UmengAnalyticsPlugin {
   /// [sessionContinueMillis] time in milliseconds to upload analytics data.
   /// [catchUncaughtExceptions] whether to catch uncaught exceptions, default for true.
   /// [pageCollectionMode] how to collect page data, leave it AUTO is ok, for future details, read umeng doc.
-  static Future<bool> init({
-    @required String androidKey,
-    @required String iosKey,
-    String channel,
+  static Future<bool?> init({
+    required String androidKey,
+    required String iosKey,
+    String? channel,
     bool logEnabled = false,
     bool encryptEnabled = false,
     int sessionContinueMillis = 30000,
@@ -44,7 +44,7 @@ class UmengAnalyticsPlugin {
   }
 
   /// Send a page start event for [viewName]
-  static Future<bool> pageStart(String viewName) async {
+  static Future<bool?> pageStart(String viewName) async {
     Map<String, dynamic> map = {
       'viewName': viewName,
     };
@@ -53,7 +53,7 @@ class UmengAnalyticsPlugin {
   }
 
   /// Send a page end event for [viewName]
-  static Future<bool> pageEnd(String viewName) async {
+  static Future<bool?> pageEnd(String viewName) async {
     Map<String, dynamic> map = {
       'viewName': viewName,
     };
@@ -62,7 +62,7 @@ class UmengAnalyticsPlugin {
   }
 
   /// Send a general event for [eventId] with a [label]
-  static Future<bool> event(String eventId, {String label= 'label', Map attributes}) async {
+  static Future<bool?> event(String eventId, {String label= 'label', Map? attributes}) async {
     Map<String, dynamic> map = {
       'eventId': eventId,
     };
@@ -80,7 +80,7 @@ class UmengAnalyticsPlugin {
   }
 
   /// 获取渠道名，iOS默认直接返回'App Store'
-  static Future<String> getChannel() {
+  static Future<String?> getChannel() {
     if(Platform.isIOS) return Future.value('App Store');
     return _channel.invokeMethod<String>('getChannel');
   }

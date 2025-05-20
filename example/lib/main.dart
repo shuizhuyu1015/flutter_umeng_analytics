@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
 
     print('Umeng initialized.');
 
-    if (!mounted) {
+    if (!mounted || result == null) {
       return;
     }
 
